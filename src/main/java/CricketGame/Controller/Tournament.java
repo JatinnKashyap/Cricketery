@@ -29,7 +29,7 @@ public abstract class Tournament {
         this.noOfPlayers = 11;
         this.cd = new GregorianCalendar();
         this.matchResults = new ArrayList<Result>();
-        this.match = new Match();
+        this.match = new Match(noOfOvers);
         this.sb = new ScoreBoard();
     }
 
@@ -57,7 +57,7 @@ public abstract class Tournament {
 
     public void createTeams() {
         for (int i = 0; i < noOfTeams; i++) {
-            teams.put(teamList.get(i), new Team(teamList.get(i)));
+            teams.put(teamList.get(i), new Team(teamList.get(i) , noOfPlayers));
         }
 
     }
@@ -78,7 +78,7 @@ public abstract class Tournament {
     public void tournamentBegins() {
         for (int i = 1; i < schedule.size() + 1; i++) {
             String sched[] = schedule.get(i);
-            System.out.println("\n\nToday's match is to be played between " + sched[0] + " and " + sched[1] + " .\nMatch No. : " + (i + 1) + " \nDate and Time : " + sched[2]);
+            System.out.println("\n\nToday's match is to be played between " + sched[0] + " and " + sched[1] + " .\nMatch No. : " + i + " \nDate and Time : " + sched[2]);
             Result result = match.runMatch(teams.get(sched[0]), teams.get(sched[1]));
             matchResults.add(result);
             sb.displayResult(result);
