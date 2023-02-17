@@ -1,4 +1,4 @@
-package CricketGame.View;
+package CricketGame.Controller;
 
 import java.util.*;
 

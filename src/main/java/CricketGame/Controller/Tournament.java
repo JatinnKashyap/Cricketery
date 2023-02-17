@@ -1,5 +1,6 @@
 package CricketGame.Controller;
 
+import CricketGame.Model.Player;
 import CricketGame.Model.Team;
 import CricketGame.View.Result;
 import CricketGame.View.ScoreBoard;
@@ -76,14 +77,37 @@ public abstract class Tournament {
     }
 
     public void tournamentBegins() {
+        Result result;
         for (int i = 1; i < schedule.size() + 1; i++) {
             String sched[] = schedule.get(i);
             System.out.println("\n\nToday's match is to be played between " + sched[0] + " and " + sched[1] + " .\nMatch No. : " + i + " \nDate and Time : " + sched[2]);
-            Result result = match.runMatch(teams.get(sched[0]), teams.get(sched[1]));
+            result = match.runMatch(teams.get(sched[0]), teams.get(sched[1]));
             matchResults.add(result);
-            sb.displayResult(result);
+            sb.displayMatchResult(result);
 
         }
+        System.out.println("\n\n\n This is the end of the group stage.");
+        String[] finale = sb.displayTeamStats(teams,teamList);
+        cd.add(cd.DATE, 4);
+        sb.finalePreGameLobby(teams.get(finale[0]), teams.get(finale[1]), cd.getTime() + "");
+        result = match.runMatch(teams.get(finale[0]), teams.get(finale[1]));
+        matchResults.add(result);
+        sb.displayMatchResult(result);
+        sb.signingOff();
+
     }
+
+    public void awards(){
+        /*best batsman - 0 (highest scorer) - a
+           best bowler - 1 (most wickets) - b
+           highest score in an innings(team) - 2 - c
+           highest score in an innings(individual) - 3 - d
+           lowest score by a team - 4 - e
+           most sixes - individual - f
+        */
+    }
+
+
+
 
 }

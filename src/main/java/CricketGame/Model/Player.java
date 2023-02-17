@@ -3,9 +3,10 @@ package CricketGame.Model;
 import CricketGame.Controller.Match;
 
 public class Player {
-    private int[] battingProb = {0, 0, 1, 1, 2, 2, 4, 4, 6, 6};
+    private int[] battingProb = {0,0, 1, 1, 2, 2, 4, 4, 6, 6};
     private String playerName;
     private int playerNo;
+    private String teamName;
     private int runsScored;
     private int sixes;
     private int fours;
@@ -15,10 +16,12 @@ public class Player {
     private int centuries;
     private int wicketsTaken;
     private int halfCenturies;
-    private int[] bowlingProb = {0, 0, 0, 0, -1, -1, 6, 6, 6, 6};
+    private int[] bowlingProb = {0, 0, 0, 0, 6, -1, 6, 6, 6, 6};
 
 
-
+    public String getTeamName(){
+        return teamName;
+    }
 
     public String getPlayerName() {
         return playerName;
@@ -97,6 +100,7 @@ public class Player {
     Player(int playerNo, String team) {
         playerName = team + playerNo;
         this.playerNo = playerNo;
+        this.teamName = team;
     }
     public int getPlayerNo(){
         return playerNo;
