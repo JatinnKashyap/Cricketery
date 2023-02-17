@@ -13,7 +13,7 @@ public class GameManager {
         Calendar dt = new GregorianCalendar();
         Scanner sc = new Scanner(System.in);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("***********Welcome to the annual Cricket Pg Cup "+ dt.get(dt.YEAR) + " ***********");
+        System.out.println("*********** Welcome to the annual Cricket Pg Cup "+ dt.get(dt.YEAR) + " ***********");
         System.out.println("Powered by Tekion Corp and sponsored by ChatGPT.");
         System.out.println("The following simulation will simulate a gaming tournament\n\n\n");
         System.out.println("Enter the number of teams");
@@ -31,7 +31,6 @@ public class GameManager {
         tour.initializeTournament(teams);
         tour.displaySchedule();
         tour.tournamentBegins();
-
 
 
 

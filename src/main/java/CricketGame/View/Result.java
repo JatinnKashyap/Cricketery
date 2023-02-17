@@ -1,4 +1,5 @@
 package CricketGame.View;
+
 import CricketGame.Model.Player;
 import CricketGame.Model.Team;
 
@@ -11,13 +12,14 @@ public class Result {
     public Team t2;
     public int t2Wickets;
     public int noOfOvers;
+    public int winner;
     public ArrayList<Integer[]> team1Batting;
     public ArrayList<Integer[]> team2Batting;
     public ArrayList<Integer[]> team1Bowling;
     public ArrayList<Integer[]> team2Bowling;
     public ArrayList<ArrayList<Integer>> innings1, innings2;
 
-    public Result(Team t1, Team t2,int noOfOvers){
+    public Result(Team t1, Team t2, int noOfOvers) {
         this.t1 = t1;
         this.t2 = t2;
         this.noOfOvers = noOfOvers;
@@ -27,136 +29,150 @@ public class Result {
         this.team2Bowling = new ArrayList<>();
         this.innings1 = new ArrayList<ArrayList<Integer>>();
         this.innings2 = new ArrayList<ArrayList<Integer>>();
-        for(int i = 0 ; i < t1.getNoOfPlayers(); i++){
+        for (int i = 0; i < t1.getNoOfPlayers(); i++) {
             team1Batting.add(new Integer[5]);
             team2Batting.add(new Integer[5]);
-            for(int j = 0 ; j < 5;j++){
-                team1Batting.get(i)[j]=0;
-                team2Batting.get(i)[j]=0;
+            for (int j = 0; j < 5; j++) {
+                team1Batting.get(i)[j] = 0;
+                team2Batting.get(i)[j] = 0;
             }
         }
-        for(int i = 0 ; i < t1.getNoOfBowlers(); i++){
+        for (int i = 0; i < t1.getNoOfBowlers(); i++) {
             team1Bowling.add(new Integer[3]);
             team2Bowling.add(new Integer[3]);
-            for(int j = 0 ; j < 3;j++){
-                team1Bowling.get(i)[j]=0;
-                team2Bowling.get(i)[j]=0;
+            for (int j = 0; j < 3; j++) {
+                team1Bowling.get(i)[j] = 0;
+                team2Bowling.get(i)[j] = 0;
             }
         }
     }
-    public void update(String bb, Player player, int attr, int val, String t){
-        if(t.equals("t1")){
-            if(bb.equals("bowl")){
-                team1Bowling.get(player.getPlayerNo()-1-(t1.getNoOfPlayers()-t1.getNoOfBowlers()))[attr]+=val;
-                switch(attr){
+
+    public void update(String bb, Player player, int attr, int val, String t) {
+        if (t.equals("t1")) {
+            if (bb.equals("bowl")) {
+                team1Bowling.get(player.getPlayerNo() - 1 - (t1.getNoOfPlayers() - t1.getNoOfBowlers()))[attr] += val;
+                switch (attr) {
                     case 0:
-                        player.setOversBowled(player.getOversBowled()+val);
+                        player.setOversBowled(player.getOversBowled() + val);
                         break;
                     case 1:
-                        player.setRunsConceded(player.getRunsConceded()+val);
+                        player.setRunsConceded(player.getRunsConceded() + val);
                         break;
                     case 2:
-                        player.setWicketsTaken(player.getWicketsTaken()+val);
+                        t1.setWicketsTaken(t1.getWicketsTaken()+1);
+                        player.setWicketsTaken(player.getWicketsTaken() + val);
                         break;
                 }
-            }
-            else{
-                team1Batting.get(player.getPlayerNo()-1)[attr]+=val;
-                switch(attr){
+            } else {
+                team1Batting.get(player.getPlayerNo() - 1)[attr] += val;
+                switch (attr) {
                     case 0:
-                        player.setRunsScored(player.getRunsScored()+val);
+                        t1.setRunsScored(t1.getRunsScored()+1);
+                        player.setRunsScored(player.getRunsScored() + val);
                         break;
                     case 1:
-                        player.setSixes(player.getSixes()+val);
+                        t1.setSixes(t1.getSixes()+1);
+                        player.setSixes(player.getSixes() + val);
                         break;
                     case 2:
-                        player.setFours(player.getFours()+val);
+                        t1.setFours(t1.getFours()+1);
+                        player.setFours(player.getFours() + val);
                         break;
                     case 3:
-                        player.setBallsPlayed(player.getBallsPlayed()+val);
+                        player.setBallsPlayed(player.getBallsPlayed() + val);
                         break;
                     case 4:
-                        team1Batting.get(player.getPlayerNo()-1)[attr] = val;
+                        team1Batting.get(player.getPlayerNo() - 1)[attr] = val;
                 }
             }
-        }else{
-            if(bb.equals("bowl")){
-                team2Bowling.get(player.getPlayerNo()-1-(t1.getNoOfPlayers()-t1.getNoOfBowlers()))[attr]+=val;
-                switch(attr){
+        } else {
+            if (bb.equals("bowl")) {
+                team2Bowling.get(player.getPlayerNo() - 1 - (t1.getNoOfPlayers() - t1.getNoOfBowlers()))[attr] += val;
+                switch (attr) {
                     case 0:
-                        player.setOversBowled(player.getOversBowled()+val);
+                        player.setOversBowled(player.getOversBowled() + val);
                         break;
                     case 1:
-                        player.setRunsConceded(player.getRunsConceded()+val);
+                        player.setRunsConceded(player.getRunsConceded() + val);
                         break;
                     case 2:
-                        player.setWicketsTaken(player.getWicketsTaken()+val);
+                        t2.setWicketsTaken(t2.getWicketsTaken()+1);
+                        player.setWicketsTaken(player.getWicketsTaken() + val);
                         break;
                 }
-            }
-            else{
-                team2Batting.get(player.getPlayerNo()-1)[attr]+=val;
-                switch(attr){
+            } else {
+                team2Batting.get(player.getPlayerNo() - 1)[attr] += val;
+                switch (attr) {
                     case 0:
-                        player.setRunsScored(player.getRunsScored()+val);
+                        t2.setRunsScored(t2.getRunsScored()+1);
+                        player.setRunsScored(player.getRunsScored() + val);
                         break;
                     case 1:
-                        player.setSixes(player.getSixes()+val);
+                        t2.setSixes(t2.getSixes()+1);
+                        player.setSixes(player.getSixes() + val);
                         break;
                     case 2:
-                        player.setFours(player.getFours()+val);
+                        t2.setFours(t2.getFours()+1);
+                        player.setFours(player.getFours() + val);
                         break;
                     case 3:
-                        player.setBallsPlayed(player.getBallsPlayed()+val);
+                        player.setBallsPlayed(player.getBallsPlayed() + val);
                         break;
                     case 4:
-                        team2Batting.get(player.getPlayerNo()-1)[attr] = val;
+                        team2Batting.get(player.getPlayerNo() - 1)[attr] = val;
                 }
             }
         }
     }
-//
+
+    //
 //    public void out(Player batsmen, Player bowler){
 //
 //    }
-    public void overUpdate(ArrayList<Integer> over, String inn){
-        if(inn.equals(innings1))
+    public void overUpdate(ArrayList<Integer> over, String inn) {
+        if (inn.equals(innings1))
             innings1.add(over);
         else
             innings2.add(over);
     }
-    public void innings1TotalScore(int runs){
+
+    public void innings1TotalScore(int runs) {
         t1Score += runs;
     }
 
-    public void innings2TotalScore(int runs){
+
+    public void innings2TotalScore(int runs) {
         t2Score += runs;
     }
-    public int getTarget(){
-        return t1Score+1;
+
+    public int getTarget() {
+        return t1Score + 1;
     }
-    public int  getT2Total(){
+
+    public int getT2Total() {
         return t2Score;
     }
-    public void increaseT2Wicket(){
+
+    public void increaseT2Wicket() {
         t2Wickets++;
     }
-    public int getT2Wickets(){
+
+    public int getT2Wickets() {
         return t2Wickets;
     }
-    public Integer[] getPlayerStats(String bb, String t, int no){
-        if(t.equals("t1")){
-            if(bb.equals("bat"))
-                return team1Batting.get(no-1);
-            else
-                return team1Bowling.get(no-1-(t1.getNoOfPlayers()-t1.getNoOfBowlers()));
-        }
-        else{
 
-            if(bb.equals("bat"))
-                return team2Batting.get(no-1);
+    public Integer[] getPlayerStats(String bb, String t, int no) {
+        if (t.equals("t1")) {
+            if (bb.equals("bat"))
+                return team1Batting.get(no - 1);
             else
-                return team2Bowling.get(no-1-(t1.getNoOfPlayers()-t1.getNoOfBowlers()));
+                return team1Bowling.get(no - 1 - (t1.getNoOfPlayers() - t1.getNoOfBowlers()));
+        } else {
+
+            if (bb.equals("bat"))
+                return team2Batting.get(no - 1);
+            else
+                return team2Bowling.get(no - 1 - (t1.getNoOfPlayers() - t1.getNoOfBowlers()));
         }
     }
 //    public void allOut(){
