@@ -1,17 +1,23 @@
-package CricketGame.Controller;
+package CricketGame.Service;
 
 import CricketGame.Model.Player;
 import CricketGame.Model.Team;
 import CricketGame.View.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-public class Match {
+@Service
+public class MatchService {
     private int noOfOvers;
     private Result res;
 
-    public Match(int noOfOvers) {
-        this.noOfOvers = noOfOvers;
+    @Autowired
+    private PlayerService ps;
+
+    public MatchService() {
+        this.noOfOvers = 20;
     }
 
     public Result runMatch(Team t1, Team t2) {
@@ -70,7 +76,6 @@ public class Match {
 //        System.out.println("The batting line up will be opened by "+striker.getPlayerName()+" at the striker end and "+runner.getPlayerName()+" at the runners end");
         outer:
         for (int i = 1; i <= noOfOvers; i++,overs++) {
-
             //bowler attr - 0:overs, 1: runsConceded, 2:wickets
             //batsmen attr - 0:runs, 1:sixes, 2: fours, 3: bowlsFaced, 4: out(bowler no)/no(-1)
             bowler = t2.getBowler(i % t2.getNoOfBowlers());
@@ -78,7 +83,7 @@ public class Match {
             over.add(bowler.getPlayerNo());
             res.update("bowl",bowler, 0,1,"t2");
             for (int j = 0; j < 6; j++) {
-                int ballResult = ballResult(striker.bat(), bowler.bowl());
+                int ballResult = ballResult(ps.bat(striker), ps.bowl(bowler));
                 over.add(ballResult);
                 switch (ballResult) {
                     case -1:
@@ -160,7 +165,6 @@ public class Match {
 //        System.out.println("The batting line up will be opened by "+striker.getPlayerName()+" at the striker end and "+runner.getPlayerName()+" at the runners end");
         outer:
         for (int i = 1; i <= noOfOvers; i++,overs++) {
-
             //bowler attr - 0:overs, 1: runsConceded, 2:wickets
             //batsmen attr - 0:runs, 1:sixes, 2: fours, 3: bowlsFaced, 4: out(bowler no)/no(-1)
             bowler = t1.getBowler(i % t2.getNoOfBowlers());
@@ -168,7 +172,7 @@ public class Match {
             over.add(bowler.getPlayerNo());
             res.update("bowl",bowler, 0,1,"t1");
             for (int j = 0; j < 6; j++) {
-                int ballResult = ballResult(striker.bat(), bowler.bowl());
+                int ballResult = ballResult(ps.bat(striker), ps.bowl(bowler));
                 over.add(ballResult);
                 switch (ballResult) {
                     case -1:
