@@ -1,12 +1,14 @@
-package CricketGame.View;
+package CricketGame.Service;
 
 import CricketGame.Model.Player;
 import CricketGame.Model.Team;
+import CricketGame.View.Result;
+import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
-public class ScoreBoard {
+@Service
+public class ScoreBoardService {
 
     public void displayMatchResult(Result result) {
 
