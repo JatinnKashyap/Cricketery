@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class Player {
     private String playerName;
     private int playerNo;
+    private int playerId;
     private String teamName;
     private int runsScored;
     private int sixes;

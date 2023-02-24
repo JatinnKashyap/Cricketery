@@ -17,24 +17,22 @@ public class TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
-    public int getPoints(Team team){
-        return team.getMatchesDrawn() + team.getMatchesWon() * 2;
-    }
 
 
-
-    public float calculateNetRunRate(Team team){
+    public void calculateTeamStuff(Team team){
 
         float netRunRate = (float)team.getRunsScored()/team.getOversPlayed() - (float)team.getRunsConceded()/team.getOversBowled();
         team.setNetRunRate(netRunRate);
-        return netRunRate;
+        int point =  team.getMatchesDrawn() + team.getMatchesWon() * 2;
+        team.setPoints(point);
     }
 
     public void addPlayers(Team team){
         for(int i = 0; i < team.getNoOfPlayers();i++){
             Player player = new Player();
             player.setPlayerAttrib(i+1,team.getTeamName());
-            team.getPlayers().add(player); playerRepositry.save(new PlayerEntity(player.getPlayerName(),player.getPlayerNo(),team.getTeamName(),player.getRunsScored()));
+            team.getPlayers().add(player);
+            playerRepositry.save(new PlayerEntity(player.getPlayerName(),player.getPlayerNo(),team.getTeamName(),player.getRunsScored()));
         }
         for(int i = team.getNoOfPlayers()-1 ; i >= team.getNoOfPlayers()-1-team.getNoOfBowlers(); i--){
             team.getBowlers().add(team.getPlayers().get(i));
