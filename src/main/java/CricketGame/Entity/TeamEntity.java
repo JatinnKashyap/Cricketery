@@ -22,6 +22,7 @@ public class TeamEntity {
     private Long oversPlayed = 0l;
     private Long oversBowled = 0l;
     private Long runsConceded = 0l;
+    private Long points = 0l;
     private Long sixes = 0l;
     private Long wicketsTaken = 0l;
     private Long fours = 0l;

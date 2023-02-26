@@ -1,11 +1,13 @@
 package CricketGame.Service;
 
 import CricketGame.Entity.MatchEntity;
+import CricketGame.Entity.PlayerEntity;
 import CricketGame.Entity.ScheduleEntity;
 import CricketGame.Entity.TeamEntity;
 import CricketGame.Model.Team;
 import CricketGame.Model.Tournament;
 import CricketGame.Repository.MatchRepository;
+import CricketGame.Repository.PlayerRepositry;
 import CricketGame.Repository.ScheduleRepository;
 import CricketGame.Model.Match;
 import CricketGame.Repository.TeamRepository;
@@ -23,6 +25,9 @@ public class TournamentService {
     private MatchService matchService;
 
     @Autowired
+    private PlayerService playerService;
+
+    @Autowired
     private ScoreBoardService scoreBoardService;
 
     @Autowired
@@ -37,6 +42,9 @@ public class TournamentService {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private PlayerRepositry playerRepositry;
+
     private Calendar calendar = new GregorianCalendar();
 
     public HashMap<String, Team> createTeams(int noOfTeams, int noOfPlayers,ArrayList<String> teamList) {
@@ -44,7 +52,7 @@ public class TournamentService {
         for (int i = 0; i < noOfTeams; i++) {
             Team obj = new Team();
             teamRepository.save(new TeamEntity((i+1), teamList.get(i), 11));
-            obj.setTeamAttributes(teamList.get(i), noOfPlayers, (i+1));
+            obj.setTeamAttributes(teamList.get(i), noOfPlayers, (i+1l));
             teamService.addPlayers(obj);
             teams.put(teamList.get(i), obj);
         }
@@ -116,7 +124,9 @@ public class TournamentService {
             match = matchService.runMatch(team1, team2, i);
             //tomatchResults.add(result);
             scoreBoardService.displayMatchResult(match);
-            matchRepository.save(new MatchEntity(match.getMatchId(), match.getTeam1().getTeamId(), match.getTeam2().getTeamId(), match.getTeam1().getTeamName(), match.getTeam2().getTeamName(), match.getTeam1().getTeamName(), match.getTeam1Score(), match.getTeam2Score(), (match.getWinner() == 1? match.getTeam1().getTeamName(): (match.getWinner() == 2? match.getTeam2().getTeamName() : "Draw"))));
+            playerService.autoSave(match);
+            matchService.autoSave(match);
+            teamService.autoSave(match);
 
         }
         System.out.println("\n\n\n This is the end of the group stage.");
@@ -125,9 +135,10 @@ public class TournamentService {
         scoreBoardService.finalePreGameLobby(tour.getTeams().get(finale[0]), tour.getTeams().get(finale[1]), calendar.getTime() + "");
         match = matchService.runMatch(tour.getTeams().get(finale[0]), tour.getTeams().get(finale[1]), tour.getSchedule().size());
 //        matchResults.add(result);
-
-
         scoreBoardService.displayMatchResult(match);
+        playerService.autoSave(match);
+        matchService.autoSave(match);
+        teamService.autoSave(match);
         scoreBoardService.signingOff();
 
     }
