@@ -1,7 +1,6 @@
 package CricketGame.Model;
 
 import CricketGame.Service.MatchService;
-import CricketGame.View.Result;
 import CricketGame.Service.ScoreBoardService;
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ public class Tournament {
     private Map<String, Team> teams;
     private ArrayList<String> teamList;
     private Map<Integer, String[]> schedule;
-    private ArrayList<Result> matchResults;
+    private ArrayList<Match> matchResults;
     private int noOfOvers;
     private int noOfPlayers;
     private Calendar cd;
@@ -30,7 +29,7 @@ public class Tournament {
         this.noOfOvers = 20;
         this.noOfPlayers = 11;
         this.cd = new GregorianCalendar();
-        this.matchResults = new ArrayList<Result>();
+        this.matchResults = new ArrayList<Match>();
         this.sb = new ScoreBoardService();
     }
 }

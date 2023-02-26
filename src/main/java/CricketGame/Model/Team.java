@@ -15,6 +15,7 @@ public class Team {
     private ArrayList<Player> players;
     private ArrayList<Player> bowlers;
     private int noOfPlayers;
+    private Long teamId;
     private int matchesWon;
     private int matchesPlayed;
     private int matchesDrawn;
@@ -47,8 +48,9 @@ public class Team {
     public Player getBowler(int index){
         return bowlers.get(index);
     }
-    public void setTeamAttributes(String name,int noOfPlayers){
+    public void setTeamAttributes(String name,int noOfPlayers , Long teamId){
         this.setTeamName(name);
+        this.teamId = teamId;
         this.setNoOfPlayers(noOfPlayers);
         this.setNoOfBowlers(noOfPlayers/2);
     }

@@ -44,10 +44,10 @@ public class PlayerEntity {
         this.halfCenturies = halfCenturies;
     }
 
-    public PlayerEntity(String playerName, Integer playerNo, String teamName, int runsScored) {
+    public PlayerEntity(String playerName, Integer playerNo, String teamName, Long teamId) {
         this.playerName = playerName;
         this.playerNo = playerNo;
         this.teamName = teamName;
-        this.runsScored = runsScored;
+        this.teamId = teamId;
     }
 }
