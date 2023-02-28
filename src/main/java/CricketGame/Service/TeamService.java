@@ -74,7 +74,7 @@ public class TeamService {
         }
         team1.setOversBowled(team1.getOversBowled() + overs);
         team2.setOversPlayed(team2.getOversPlayed() + overs);
-        team1.setWicketsTaken(team1.getWicketsTaken() + overs);
+        team1.setWicketsTaken(team1.getWicketsTaken() + wickets);
         overs = wickets = 0;
         for(int i = 0 ; i < match.getTeam2Bowling().size(); i++){
             overs += match.getTeam2Bowling().get(i)[0];
@@ -82,7 +82,7 @@ public class TeamService {
         }
         team2.setOversBowled(team2.getOversBowled() + overs);
         team1.setOversPlayed(team1.getOversPlayed() + overs);
-        team2.setWicketsTaken(team2.getWicketsTaken() + overs);
+        team2.setWicketsTaken(team2.getWicketsTaken() + wickets);
         switch(match.getWinner()){
             case 1 -> {
                 team1.setMatchesWon(team1.getMatchesWon()+1);
@@ -104,5 +104,9 @@ public class TeamService {
         teamRepository.save(team1);
         teamRepository.save(team2);
 
+    }
+
+    public void reset(){
+        teamRepository.deleteAll();
     }
 }
