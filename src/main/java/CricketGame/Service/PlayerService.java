@@ -65,6 +65,10 @@ public class PlayerService {
         }
     }
 
+    public void reset(){
+        playerRepositry.deleteAll();
+    }
+
 }
 
 

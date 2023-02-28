@@ -3,11 +3,13 @@ package CricketGame.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Schedule")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor // necessary for deleteAll() function8
 public class ScheduleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @Service
 public class MatchService {
-    private int noOfOvers;
+    private final int noOfOvers;
     private Match res;
 
     @Autowired
@@ -27,7 +27,7 @@ public class MatchService {
     }
 
     public Match runMatch(Team t1, Team t2, int matchId) {
-        if (toss() == 0) {
+        if (toss() == 1) {
             Team temp = t1;
             t1 = t2;
             t2 = temp;
@@ -77,8 +77,6 @@ public class MatchService {
         res.update("bat", striker, 4, -1, "t1");
         res.update("bat", runner, 4, -1, "t1");
         Player bowler;
-//        System.out.println("Innings 1 begins!!!!\n"+t1.getTeamName()+" won the toss and elected to bat first.");
-//        System.out.println("The batting line up will be opened by "+striker.getPlayerName()+" at the striker end and "+runner.getPlayerName()+" at the runners end");
         outer:
         for (int i = 1; i <= noOfOvers; i++, overs++) {
             //bowler attr - 0:overs, 1: runsConceded, 2:wickets
@@ -91,7 +89,7 @@ public class MatchService {
                 int ballResult = ballResult(ps.bat(striker), ps.bowl(bowler));
                 over.add(ballResult);
                 switch (ballResult) {
-                    case -1:
+                    case -1 -> {
                         res.update("bowl", bowler, 2, 1, "t2");
                         res.update("bat", striker, 4, bowler.getPlayerNo(), "t1");
                         res.update("bat", striker, 3, 1, "t1");
@@ -103,11 +101,9 @@ public class MatchService {
                         }
                         striker = t1.getPlayer(index++);
                         res.update("bat", striker, 4, -1, "t1");
-                        break;
-                    case 0:
-                        res.update("bat", striker, 3, 1, "t1");
-                        break;
-                    case 1:
+                    }
+                    case 0 -> res.update("bat", striker, 3, 1, "t1");
+                    case 1 -> {
                         res.update("bowl", bowler, 1, 1, "t2");
                         res.update("bat", striker, 0, 1, "t1");
                         res.update("bat", striker, 3, 1, "t1");
@@ -116,30 +112,30 @@ public class MatchService {
                         striker = runner;
                         runner = temp;
                         runs += ballResult;
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         res.update("bowl", bowler, 1, 2, "t2");
                         res.update("bat", striker, 0, 2, "t1");
                         res.update("bat", striker, 3, 1, "t1");
                         res.innings1TotalScore(2);
                         runs += ballResult;
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         res.update("bowl", bowler, 1, 4, "t2");
                         res.update("bat", striker, 0, 4, "t1");
                         res.update("bat", striker, 2, 1, "t1");
                         res.update("bat", striker, 3, 1, "t1");
                         res.innings1TotalScore(4);
                         runs += ballResult;
-                        break;
-                    case 6:
+                    }
+                    case 6 -> {
                         res.update("bowl", bowler, 1, 6, "t2");
                         res.update("bat", striker, 0, 6, "t1");
                         res.update("bat", striker, 1, 1, "t1");
                         res.update("bat", striker, 3, 1, "t1");
                         res.innings1TotalScore(6);
                         runs += ballResult;
-                        break;
+                    }
                 }
             }
             Player temp = striker;
@@ -165,10 +161,8 @@ public class MatchService {
         Player striker = t2.getPlayer(0);
         Player runner = t2.getPlayer(1);
         res.update("bat", striker, 4, -1, "t2");
-        res.update("bat", runner, 4, 0 - 1, "t2");
+        res.update("bat", runner, 4, - 1, "t2");
         Player bowler;
-//        System.out.println("Innings 2 begins!!!!\n"+t1.getTeamName()+" won the toss and elected to bat first.");
-//        System.out.println("The batting line up will be opened by "+striker.getPlayerName()+" at the striker end and "+runner.getPlayerName()+" at the runners end");
         outer:
         for (int i = 1; i <= noOfOvers; i++, overs++) {
             //bowler attr - 0:overs, 1: runsConceded, 2:wickets
@@ -256,6 +250,15 @@ public class MatchService {
 
         matchRepository.save(new MatchEntity(match.getMatchId(), match.getTeam1().getTeamId(), match.getTeam2().getTeamId(), match.getTeam1().getTeamName(), match.getTeam2().getTeamName(), match.getTeam1().getTeamName(), match.getTeam1Score(), match.getTeam2Score(), (match.getWinner() == 1? match.getTeam1().getTeamName(): (match.getWinner() == 2? match.getTeam2().getTeamName() : "Draw"))));
 
+    }
+
+    public void reset(){
+
+        matchRepository.deleteAll();
+    }
+
+    public MatchEntity getMatch(Long matchId){
+        return matchRepository.findById(matchId).orElse(null);
     }
 
 }
