@@ -35,21 +35,21 @@ public class TournamentService {
 
     private Tournament tour;
 
-    private Calendar calendar = new GregorianCalendar();
+    private final Calendar calendar = new GregorianCalendar();
 
     public HashMap<String, Team> createTeams(int noOfTeams, int noOfPlayers,ArrayList<String> teamList) {
         HashMap<String, Team> teams = new HashMap<>();
         for (int i = 0; i < noOfTeams; i++) {
             Team obj = new Team();
             teamRepository.save(new TeamEntity((i+1), teamList.get(i), 11));
-            obj.setTeamAttributes(teamList.get(i), noOfPlayers, (i+1l));
+            obj.setTeamAttributes(teamList.get(i), noOfPlayers, (i+ 1L));
             teamService.addPlayers(obj);
             teams.put(teamList.get(i), obj);
         }
         return teams;
     }
     public HashMap<Integer,String[]> createSchedule(int noOfTeams, int noOfMatches, ArrayList<String> teamList) {
-        Map<Integer,String[]> schedule = new HashMap<Integer,String[]>();
+        HashMap<Integer,String[]> schedule = new HashMap<>();
         ArrayList<String[]> sched = new ArrayList<>();
         for (int i = 0; i < noOfMatches; i++) {
             for (int j = 0; j < noOfTeams; j++) {
@@ -67,12 +67,11 @@ public class TournamentService {
             scheduleRepository.save(new ScheduleEntity((long)(i+1),sched.get(i)[0], sched.get(i)[1], sched.get(i)[2]));
         }
 
-        return (HashMap)schedule;
+        return schedule;
     }
 
     public void beginTournament(int noOfTeams, int noOfMatches, List<String> teams){
         tour = new Tournament();
-        Scanner sc = new Scanner(System.in);
         System.out.println("*********** Welcome to the annual Cricket Pg Cup "+ calendar.get(Calendar.YEAR) + " ***********");
         System.out.println("Powered by Tekion Corp and sponsored by ChatGPT.");
         System.out.println("The following simulation will simulate a gaming tournament\n\n\n");
@@ -100,7 +99,7 @@ public class TournamentService {
             System.out.println((i) + "   \t\t" + String.format("%1$" + 10 + "s", tour.getSchedule().get(i)[0]) + "\t\t" + String.format("%1$" + 10 + "s", tour.getSchedule().get(i)[1]) + "\t\t" + tour.getSchedule().get(i)[2]);
         }
     }
-    public void reset(){
+    public void reset(){// single point of contact, fault tolerance, single point of failure
         playerService.reset();
         teamService.reset();
         matchService.reset();
@@ -113,7 +112,7 @@ public class TournamentService {
             String[] sched = tour.getSchedule().get(i);
             Team team1 = tour.getTeams().get(sched[0]);
             Team team2 = tour.getTeams().get(sched[1]);
-            if(matchService.getMatch((Long)(long)i) == null){
+            if(matchService.getMatch((long)i) == null){
                 System.out.println("\n\nToday's match is to be played between " + sched[0] + " and " + sched[1] + " .\nMatch No. : " + i + " \nDate and Time : " + sched[2]);
                 match = matchService.runMatch(team1, team2, i);
                 scoreBoardService.displayMatchResult(match);
@@ -158,7 +157,7 @@ public class TournamentService {
     public void finale(){
         boolean flag = true;
         for(int i = 0 ; i < tour.getSchedule().size() ; i++){
-            if(matchService.getMatch((Long)(long)i) == null){
+            if(matchService.getMatch((long)i) == null){
                 flag = false;
                 break;
             }
@@ -179,14 +178,16 @@ public class TournamentService {
         }
     }
 
-//    public void awards(){
-//        /*best batsman - 0 (highest scorer) - a
-//           best bowler - 1 (most wickets) - b
-//           the highest score in an innings(team) - 2 - c
-//           the highest score in an innings(individual) - 3 - d
-//           the lowest score by a team - 4 - e
-//           most sixes - individual - f
-//        */
-//    }
+/*
+    public void awards(){
+        /*best batsman - 0 (highest scorer) - a
+           best bowler - 1 (most wickets) - b
+           the highest score in an innings(team) - 2 - c
+           the highest score in an innings(individual) - 3 - d
+           the lowest score by a team - 4 - e
+           most sixes - individual - f
+        * /
+    }
+*/
 
 }
