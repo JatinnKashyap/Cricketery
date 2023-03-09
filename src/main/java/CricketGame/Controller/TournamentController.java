@@ -16,6 +16,7 @@ public class TournamentController {
     @PostMapping("/run")
     public void start(@RequestBody InputWrapper input)throws RuntimeException{
         tournamentService.beginTournament(input.noOfTeams, input.noOfMatches, input.teams);
+        return "Successfull";
     }
 
     @PostMapping("/reset")
