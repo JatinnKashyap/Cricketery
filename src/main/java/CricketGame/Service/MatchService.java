@@ -231,8 +231,6 @@ public class MatchService {
             }
             res.overUpdate(over, "innings2");
         }
-
-
         if (index == 12) overs = noOfOvers;
         t2.setRunsScored(t2.getRunsScored() + runs);
         t2.setOversPlayed(t2.getOversPlayed() + overs);
