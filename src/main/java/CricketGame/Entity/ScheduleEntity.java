@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Schedule")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor // necessary for deleteAll() function8
+@NoArgsConstructor // necessary for deleteAll() function
 public class ScheduleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

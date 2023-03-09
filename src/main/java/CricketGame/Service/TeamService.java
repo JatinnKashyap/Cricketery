@@ -48,7 +48,9 @@ public class TeamService {
     public void autoSave(Match match){
         TeamEntity team1 = teamRepository.findById(match.getTeam1().getTeamId()).orElse(null);
         TeamEntity team2 = teamRepository.findById(match.getTeam2().getTeamId()).orElse(null);
+        assert team1 != null;
         team1.setMatchesPlayed(team1.getMatchesPlayed() + 1 );
+        assert team2 != null;
         team2.setMatchesPlayed(team2.getMatchesPlayed() + 1 );
         team1.setRunsScored(team1.getRunsScored() + match.getTeam1Score());
         team2.setRunsScored(team2.getRunsScored() + match.getTeam2Score());

@@ -14,8 +14,8 @@ public class TournamentController {
     private TournamentService tournamentService;
 
     @PostMapping("/run")
-    public String start(@RequestBody InputWrapper aObject)throws RuntimeException{
-        tournamentService.beginTournament(aObject.noOfTeams, aObject.noOfMatches, aObject.teams);
+    public void start(@RequestBody InputWrapper input)throws RuntimeException{
+        tournamentService.beginTournament(input.noOfTeams, input.noOfMatches, input.teams);
         return "Successfull";
     }
 
@@ -24,7 +24,7 @@ public class TournamentController {
         tournamentService.reset();
     }
 
-    @PostMapping("/schedule")
+    @PostMapping("/schedule")// return data to api call
     public void displaySchedule(){
         tournamentService.displaySchedule();
     }
@@ -51,4 +51,7 @@ class InputWrapper{
     int noOfMatches;
     List<String> teams;
 }
+
+// make new branch and debug 2nd innings score > 6
+
 
