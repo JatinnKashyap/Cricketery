@@ -1,11 +1,7 @@
 package CricketGame.Model;
 
-import CricketGame.Service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
@@ -37,7 +33,7 @@ public class Team {
     private String teamName;
     public Team(){
         this.bowlers = new ArrayList<>();
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
     }
 
     public Player getPlayer(int index){

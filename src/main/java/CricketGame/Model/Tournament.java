@@ -23,13 +23,13 @@ public class Tournament {
     private ScoreBoardService sb;
 
     public Tournament() {
-        this.teams = new HashMap<String, Team>();
-        this.schedule = new HashMap<Integer, String[]>();
-        this.teamList = new ArrayList<String>();
+        this.teams = new HashMap<>();
+        this.schedule = new HashMap<>();
+        this.teamList = new ArrayList<>();
         this.noOfOvers = 20;
         this.noOfPlayers = 11;
         this.cd = new GregorianCalendar();
-        this.matchResults = new ArrayList<Match>();
+        this.matchResults = new ArrayList<>();
         this.sb = new ScoreBoardService();
     }
 }

@@ -82,7 +82,7 @@ public class MatchService {
             //bowler attr - 0:overs, 1: runsConceded, 2:wickets
             //batsmen attr - 0:runs, 1:sixes, 2: fours, 3: bowlsFaced, 4: out(bowler no)/no(-1)
             bowler = t2.getBowler(i % t2.getNoOfBowlers());
-            ArrayList<Integer> over = new ArrayList<Integer>();
+            ArrayList<Integer> over = new ArrayList<>();
             over.add(bowler.getPlayerNo());
             res.update("bowl", bowler, 0, 1, "t2");
             for (int j = 0; j < 6; j++) {
@@ -168,7 +168,7 @@ public class MatchService {
             //bowler attr - 0:overs, 1: runsConceded, 2:wickets
             //batsmen attr - 0:runs, 1:sixes, 2: fours, 3: bowlsFaced, 4: out(bowler no)/no(-1)
             bowler = t1.getBowler(i % t2.getNoOfBowlers());
-            ArrayList<Integer> over = new ArrayList<Integer>();
+            ArrayList<Integer> over = new ArrayList<>();
             over.add(bowler.getPlayerNo());
             res.update("bowl", bowler, 0, 1, "t1");
             for (int j = 0; j < 6; j++) {
@@ -226,7 +226,7 @@ public class MatchService {
                 }
                 if (res.getTarget() <= res.getTeam2Score()) {
                     res.overUpdate(over, "innings2");
-                    break;
+                    break outer;
                 }
             }
             res.overUpdate(over, "innings2");
