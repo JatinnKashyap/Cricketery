@@ -67,6 +67,10 @@ public class PlayerService {
         }
     }
 
+    public PlayerEntity getPlayer(Long id){
+        return playerRepositry.findById(id).orElse(null);
+    }
+
     public void reset(){
         playerRepositry.deleteAll();
     }

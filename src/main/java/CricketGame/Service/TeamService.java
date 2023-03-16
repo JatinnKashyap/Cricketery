@@ -111,4 +111,9 @@ public class TeamService {
     public void reset(){
         teamRepository.deleteAll();
     }
+
+    public TeamEntity getTeam(Long id){
+        return teamRepository.findById(id).orElse(null);
+    }
+
 }
