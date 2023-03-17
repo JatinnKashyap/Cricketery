@@ -1,4 +1,4 @@
-package CricketGame.Entity;
+package CricketGame.Entity.SQLEntity;
 
 import CricketGame.Service.MatchService;
 import jakarta.persistence.*;

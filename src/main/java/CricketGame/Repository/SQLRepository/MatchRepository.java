@@ -1,6 +1,6 @@
-package CricketGame.Repository;
+package CricketGame.Repository.SQLRepository;
 
-import CricketGame.Entity.MatchEntity;
+import CricketGame.Entity.SQLEntity.MatchEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,10 +1,12 @@
 package CricketGame.Service;
 
-import CricketGame.Entity.MatchEntity;
+import CricketGame.Entity.ESEntity.MatchESEntity;
+import CricketGame.Entity.SQLEntity.MatchEntity;
 import CricketGame.Model.Player;
 import CricketGame.Model.Team;
 import CricketGame.Model.Match;
-import CricketGame.Repository.MatchRepository;
+import CricketGame.Repository.ESRepository.ESMatchRepository;
+import CricketGame.Repository.SQLRepository.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class MatchService {
 
     @Autowired
     private PlayerService ps;
+
+    @Autowired
+    private ESMatchRepository esMatchRepository;
 
     @Autowired
     private MatchRepository matchRepository;
@@ -247,13 +252,14 @@ public class MatchService {
     }
 
     public void autoSave(Match match){
-
-        matchRepository.save(new MatchEntity(match.getMatchId(), match.getTeam1().getTeamId(), match.getTeam2().getTeamId(), match.getTeam1().getTeamName(), match.getTeam2().getTeamName(), match.getTeam1().getTeamName(), match.getTeam1Score(), match.getTeam2Score(), (match.getWinner() == 1? match.getTeam1().getTeamName(): (match.getWinner() == 2? match.getTeam2().getTeamName() : "Draw"))));
-
+        MatchEntity me = new MatchEntity(match.getMatchId(), match.getTeam1().getTeamId(), match.getTeam2().getTeamId(), match.getTeam1().getTeamName(), match.getTeam2().getTeamName(), match.getTeam1().getTeamName(), match.getTeam1Score(), match.getTeam2Score(), (match.getWinner() == 1? match.getTeam1().getTeamName(): (match.getWinner() == 2? match.getTeam2().getTeamName() : "Draw")));
+        MatchESEntity mESE = new MatchESEntity(match.getMatchId(), match.getTeam1().getTeamId(), match.getTeam2().getTeamId(), match.getTeam1().getTeamName(), match.getTeam2().getTeamName(), match.getTeam1().getTeamName(), match.getTeam1Score(), match.getTeam2Score(), (match.getWinner() == 1? match.getTeam1().getTeamName(): (match.getWinner() == 2? match.getTeam2().getTeamName() : "Draw")));
+        matchRepository.save(me);
+        esMatchRepository.save(mESE);
     }
 
     public void reset(){
-
+        esMatchRepository.deleteAll();
         matchRepository.deleteAll();
     }
 

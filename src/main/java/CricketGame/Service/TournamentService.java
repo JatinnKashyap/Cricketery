@@ -1,12 +1,16 @@
 package CricketGame.Service;
 
-import CricketGame.Entity.ScheduleEntity;
-import CricketGame.Entity.TeamEntity;
+import CricketGame.Entity.ESEntity.ScheduleESEntity;
+import CricketGame.Entity.ESEntity.TeamESEntity;
+import CricketGame.Entity.SQLEntity.ScheduleEntity;
+import CricketGame.Entity.SQLEntity.TeamEntity;
 import CricketGame.Model.Team;
 import CricketGame.Model.Tournament;
-import CricketGame.Repository.ScheduleRepository;
+import CricketGame.Repository.ESRepository.ESScheduleRepository;
+import CricketGame.Repository.ESRepository.ESTeamRepository;
+import CricketGame.Repository.SQLRepository.ScheduleRepository;
 import CricketGame.Model.Match;
-import CricketGame.Repository.TeamRepository;
+import CricketGame.Repository.SQLRepository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +37,15 @@ public class TournamentService {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private ESTeamRepository esTeamRepository;
+
+    @Autowired
+    private ESScheduleRepository esScheduleRepository;
+
+    @Autowired
+    private ScheduleService scheduleService;
+
     private Tournament tour;
 
     private final Calendar calendar = new GregorianCalendar();
@@ -42,6 +55,7 @@ public class TournamentService {
         for (int i = 0; i < noOfTeams; i++) {
             Team obj = new Team();
             teamRepository.save(new TeamEntity((i+1), teamList.get(i), 11));
+            esTeamRepository.save(new TeamESEntity((i+1), teamList.get(i), 11));
             obj.setTeamAttributes(teamList.get(i), noOfPlayers, (i+ 1L));
             teamService.addPlayers(obj);
             teams.put(teamList.get(i), obj);
@@ -64,9 +78,11 @@ public class TournamentService {
             calendar.add(Calendar.DATE, 4);
             sched.get(i)[2] = calendar.getTime() + "";
             schedule.put(i + 1, sched.get(i));
-            scheduleRepository.save(new ScheduleEntity((long)(i+1),sched.get(i)[0], sched.get(i)[1], sched.get(i)[2]));
+            ScheduleEntity se = new ScheduleEntity((long)(i+1),(long)(i+1),sched.get(i)[0], sched.get(i)[1], sched.get(i)[2]);
+            scheduleRepository.save(se);
+            ScheduleESEntity sese = new ScheduleESEntity((long)(i+1),(long)(i+1),sched.get(i)[0], sched.get(i)[1], sched.get(i)[2]);
+            esScheduleRepository.save(sese);
         }
-
         return schedule;
     }
 
@@ -103,7 +119,7 @@ public class TournamentService {
         playerService.reset();
         teamService.reset();
         matchService.reset();
-        scheduleRepository.deleteAll();
+        scheduleService.reset();
     }
 
     public void autoRun() {

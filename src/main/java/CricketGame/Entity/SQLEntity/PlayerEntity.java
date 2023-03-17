@@ -1,4 +1,4 @@
-package CricketGame.Entity;
+package CricketGame.Entity.SQLEntity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 public class PlayerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String playerName;
@@ -44,7 +43,8 @@ public class PlayerEntity {
         this.halfCenturies = halfCenturies;
     }
 
-    public PlayerEntity(String playerName, Integer playerNo, String teamName, Long teamId) {
+    public PlayerEntity(long id,String playerName, Integer playerNo, String teamName, Long teamId) {
+        this.id = id;
         this.playerName = playerName;
         this.playerNo = playerNo;
         this.teamName = teamName;

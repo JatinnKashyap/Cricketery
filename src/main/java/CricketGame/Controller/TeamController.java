@@ -1,8 +1,6 @@
 package CricketGame.Controller;
 
-import CricketGame.Entity.PlayerEntity;
-import CricketGame.Entity.TeamEntity;
-import CricketGame.Service.PlayerService;
+import CricketGame.Entity.SQLEntity.TeamEntity;
 import CricketGame.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
