@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "Team")
+@Table(name = "Team",indexes = {@Index(name = "idx_team_name", columnList = "teamName")})
 @NoArgsConstructor
 public class TeamEntity {
     @Id

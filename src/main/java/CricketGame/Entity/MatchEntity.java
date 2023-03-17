@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Matches")
+@Table(name = "Matches", indexes = {@Index(name = "idx_winner_team", columnList = "winner")})
 @Data
 @NoArgsConstructor
 public class MatchEntity {
