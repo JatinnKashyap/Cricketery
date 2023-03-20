@@ -1,4 +1,4 @@
-package CricketGame.Repository;
+package CricketGame.Repository.SQLRepository;
 
 import CricketGame.Entity.ScoreBoard;
 import org.springframework.data.repository.CrudRepository;

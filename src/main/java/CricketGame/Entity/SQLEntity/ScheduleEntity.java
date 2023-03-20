@@ -1,4 +1,4 @@
-package CricketGame.Entity;
+package CricketGame.Entity.SQLEntity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ScheduleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Long matchNo;
@@ -20,11 +19,13 @@ public class ScheduleEntity {
     private String team2;
     private String date;
 
-    public ScheduleEntity(Long matchNo, String team1, String team2, String date){
+    public ScheduleEntity(long id,long matchNo, String team1, String team2, String date){
+        this.id = id;
         this.matchNo = matchNo;
         this.team1 = team1;
         this.team2 = team2;
         this.date = date;
 
     }
+
 }
